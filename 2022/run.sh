@@ -1,6 +1,6 @@
 OUTFILE=advent.elf
 ARGS="$@"
-ADDITIONALARGS="< data/d02.txt"
+ADDITIONALARGS=""
 COMPILE="go build -o $OUTFILE ."
 EXECUTE="./$OUTFILE $ARGS $ADDITIONALARGS"
 TIDY="go mod tidy"
@@ -12,7 +12,7 @@ rc=$?
 if [ $rc -ne 0 ]; then
 exit $rc
 fi
-echo "TIDYING SUCCESSFULL"
+echo "TIDYING SUCCESSFUL"
 
 echo "COMPILING: $COMPILE"
 $COMPILE
