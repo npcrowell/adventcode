@@ -126,7 +126,7 @@ func part2(data []string) int {
 }
 
 func Run(datafile string) {
-	e.Print("Let's Go Day 03!")
+	e.Print("Let's Go Day 04!")
 
 	data, err := e.ReadInTextFile(datafile)
 	if err != nil {

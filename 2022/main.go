@@ -1,9 +1,9 @@
 package main
 
 import (
-	d "adventcode/2022/day04"
+	d "adventcode/2022/day05"
 )
 
 func main() {
-	d.Run("data/d04.txt")
+	d.Run("data/d05.txt")
 }
