@@ -197,7 +197,7 @@ func part2(data []string) string {
 	return res
 }
 
-func Run(datafile string) {
+func Run(datafile string, part int) {
 	e.Print("Let's Go Day 05!")
 
 	data, err := e.ReadInTextFile(datafile)
@@ -206,8 +206,14 @@ func Run(datafile string) {
 		return
 	}
 
-	e.Print("Part 1: %v", part1(data))
+	if part == 1 {
+		e.Print("Part 1: %v", part1(data))
 
-	e.Print("Part 2: %v", part2(data))
+	} else if part == 2 {
+		e.Print("Part 2: %v", part2(data))
+
+	} else {
+		e.Perror("Unregognized part number: %v", part)
+	}
 
 }

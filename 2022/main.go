@@ -1,9 +1,23 @@
 package main
 
 import (
-	d "adventcode/2022/day05"
+	"flag"
+	"fmt"
 )
 
+var (
+	day  *int
+	part *int
+)
+
+func init() {
+	day = flag.Int("day", 1, "Day number to run")
+	part = flag.Int("part", 1, "Part of day to run")
+}
+
 func main() {
-	d.Run("data/d05.txt")
+	flag.Parse()
+	datafile := fmt.Sprintf("data/d%02d.txt", *day)
+	fmt.Printf("Datafile: %v\n", datafile)
+	run(*day, *part, datafile)
 }
