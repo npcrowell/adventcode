@@ -18,6 +18,5 @@ func init() {
 func main() {
 	flag.Parse()
 	datafile := fmt.Sprintf("data/d%02d.txt", *day)
-	fmt.Printf("Datafile: %v\n", datafile)
 	run(*day, *part, datafile)
 }

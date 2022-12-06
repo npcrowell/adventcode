@@ -6,6 +6,7 @@ import (
 	d03 "adventcode/2022/day03"
 	d04 "adventcode/2022/day04"
 	d05 "adventcode/2022/day05"
+	d06 "adventcode/2022/day06"
 	"fmt"
 )
 
@@ -22,5 +23,7 @@ func run(day int, part int, datafile string) {
 		d04.Run(datafile)
 	case 5:
 		d05.Run(datafile, part)
+	case 6:
+		d06.Run(datafile, part)
 	}
 }
