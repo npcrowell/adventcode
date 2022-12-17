@@ -16,6 +16,17 @@ func NewGrid() *Grid {
 	return &Grid{rowCount: 0, colCount: 0}
 }
 
+func (g *Grid) GetRows() [][]int {
+	return g.g
+}
+
+func EmptyGrid(rows uint, cols uint) *Grid {
+	g := NewGrid()
+	g.AddRow(rows)
+	g.AddColumn(cols)
+	return g
+}
+
 func (g *Grid) Raw() [][]int {
 	return g.g
 }
@@ -74,6 +85,7 @@ func (g *Grid) AddRow(count uint) {
 		}
 	}
 	g.rowCount = uint(len(g.g))
+	g.alignColumns()
 }
 
 func (g *Grid) AddColumn(count uint) {
@@ -82,6 +94,15 @@ func (g *Grid) AddColumn(count uint) {
 			g.g[r] = append(g.g[r], 0)
 			g.colCount = uint(len(g.g[0]))
 		}
+	}
+}
+
+func (g *Grid) AddFirstColumn() {
+	for i := range g.g {
+		var newRow []int
+		newRow = append(newRow, 0)
+		newRow = append(newRow, g.g[i]...)
+		g.g[i] = newRow
 	}
 }
 

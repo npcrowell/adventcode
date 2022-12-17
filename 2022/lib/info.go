@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"runtime"
 )
 
 func Printf(f string, a ...interface{}) {
@@ -25,4 +26,11 @@ func ReadInput() string {
 	reader := bufio.NewReader(os.Stdin)
 	text, _ := reader.ReadString('\n')
 	return text
+}
+
+func Debug(f string, a ...interface{}) {
+	_, file, line, _ := runtime.Caller(1)
+	fmt.Printf(" [*] %v:%v >> ", file, line)
+	fmt.Printf(f, a...)
+	fmt.Println()
 }
