@@ -26,5 +26,8 @@ for arg in $@; do
 done
 
 cmd="go run . -day $d -part $part $test $debug"
-echo $cmd
+# echo
+# echo $cmd
+echo
 $cmd 
+echo

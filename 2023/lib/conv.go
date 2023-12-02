@@ -8,21 +8,22 @@ import (
 
 func GetSubstrings(base string, searchsubs []string, caseSensitive bool) []string {
 	var foundsubs []string
+	var snap int
 
 	for i := range base {
 		for _, sub := range searchsubs {
-			snap := i + len(sub)
-			if snap <= len(base) {
-				// Printf("Searching for '%v' at '%v' [%v:%v] \n", sub, base[i:], i, snap)
-				if caseSensitive {
-					if base[i:snap] == sub {
-						foundsubs = append(foundsubs, sub)
-					}
-				} else {
-					if strings.EqualFold(base[i:snap], sub) {
-						// Printf("Found '%v' in '%v'\n", sub, base)
-						foundsubs = append(foundsubs, base[i:snap])
-					}
+			if snap = i + len(sub); snap > len(base) {
+				break
+			}
+			bsub := base[i:snap]
+
+			if caseSensitive {
+				if bsub == sub {
+					foundsubs = append(foundsubs, bsub)
+				}
+			} else {
+				if strings.EqualFold(bsub, sub) {
+					foundsubs = append(foundsubs, bsub)
 				}
 			}
 		}

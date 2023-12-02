@@ -1,8 +1,8 @@
 package main
 
 import (
+	"advent2023/data"
 	"advent2023/lib"
-	e "advent2023/lib"
 	"flag"
 	"fmt"
 )
@@ -20,26 +20,39 @@ func main() {
 	lib.Dbg = *pdbg
 
 	// Setup
-	days := [2]func(int, []string, bool) (int, error){day0, day1}
-
-	// Validation
-	if 0 > day || day >= len(days) {
-		e.Perror("Bad day %v\n", day)
+	days := []func(int, []string) (int, error){
+		day0, day1, day2,
 	}
 
-	filename := fmt.Sprintf("data/d%02d.txt", day)
-	data, err := e.ReadInTextFile(filename)
-	if err != nil {
-		e.Perror("Unable to open file: %v\n", err)
+	// Validation, exit on failure
+	if 0 > day || day >= len(days) {
+		lib.Perror("Bad day %v", day)
+		return
+	}
+
+	var d []string
+	if test {
+		tdatastr := fmt.Sprintf("day%dpart%d", day, part)
+		d = data.Testdata[tdatastr]
+	} else {
+		// Load file
+		filename := fmt.Sprintf("db/d%02d.txt", day)
+		dt, err := lib.ReadInTextFile(filename)
+		if err != nil {
+			// There should be a file, but sometimes there might not be
+			// Alert and continue execution
+			lib.Perror("Unable to open file: %v", err)
+		}
+		d = dt
 	}
 
 	// Execution
-	r, err := days[day](part, data, test)
+	r, err := days[day](part, d)
 	if err != nil {
-		e.Perror("Day %d, part %d, error: %v\n", day, part, err)
+		lib.Perror("Day %d, part %d, error: %v", day, part, err)
 		return
 	}
 
 	// Results
-	e.Printf("Day %d, part %d = %d\n", day, part, r)
+	lib.Psuccess("Day %d, part %d = %d", day, part, r)
 }

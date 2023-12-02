@@ -6,6 +6,8 @@ import (
 	"os"
 	"regexp"
 	"runtime"
+
+	"github.com/fatih/color"
 )
 
 var Dbg bool = false
@@ -20,9 +22,17 @@ func Print(f string, a ...interface{}) {
 }
 
 func Perror(f string, a ...interface{}) {
-	fmt.Print(" [-] Error: ")
-	Printf(f, a...)
-	fmt.Println()
+	c := color.New(color.FgRed)
+	c.Print(" [-] Error: ")
+	c.Printf(f, a...)
+	c.Println()
+}
+
+func Psuccess(f string, a ...interface{}) {
+	c := color.New(color.FgGreen)
+	c.Print(" [+] ")
+	c.Printf(f, a...)
+	c.Println()
 }
 
 func ReadInput() string {
@@ -34,11 +44,12 @@ func ReadInput() string {
 func Debug(f string, a ...interface{}) {
 	if Dbg {
 		_, fullfile, line, _ := runtime.Caller(1)
-		r, _ := regexp.Compile("2023/(.+[.]go)$")
-		file := r.FindAllStringSubmatch(fullfile, 1)[0]
+		r, _ := regexp.Compile("2023/(.+go)$")
+		file := r.FindAllStringSubmatch(fullfile, 1)[0][1]
+		c := color.New(color.FgHiYellow)
 
-		fmt.Printf(" [*] %v:%v >> ", file, line)
-		fmt.Printf(f, a...)
-		fmt.Println()
+		c.Printf(" [%v:%v] ", file, line)
+		c.Printf(f, a...)
+		c.Println()
 	}
 }
