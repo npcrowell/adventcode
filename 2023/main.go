@@ -36,7 +36,7 @@ func main() {
 		d = data.Testdata[tdatastr]
 	} else {
 		// Load file
-		filename := fmt.Sprintf("db/d%02d.txt", day)
+		filename := fmt.Sprintf("data/d%02d.txt", day)
 		dt, err := lib.ReadInTextFile(filename)
 		if err != nil {
 			// There should be a file, but sometimes there might not be
