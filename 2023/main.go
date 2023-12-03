@@ -21,7 +21,7 @@ func main() {
 
 	// Setup
 	days := []func(int, []string) (int, error){
-		day0, day1, day2,
+		day0, day1, day2, day3,
 	}
 
 	// Validation, exit on failure
@@ -32,8 +32,15 @@ func main() {
 
 	var d []string
 	if test {
+		lib.Debug("Loading test data")
 		tdatastr := fmt.Sprintf("day%dpart%d", day, part)
 		d = data.Testdata[tdatastr]
+		for _, line := range d {
+			lib.Debug("  %v", line)
+		}
+		if lib.Dbg {
+			lib.Print("")
+		}
 	} else {
 		// Load file
 		filename := fmt.Sprintf("data/d%02d.txt", day)

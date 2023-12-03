@@ -68,25 +68,25 @@ func (g Grid) Index(r int, c int) int {
 	return (g.rows * r) + c
 }
 
-func (g Grid) isFirstRow(i int) bool {
+func (g Grid) IsFirstRow(i int) bool {
 	return g.Row(i) == 0
 }
 
-func (g Grid) isLastRow(i int) bool {
+func (g Grid) IsLastRow(i int) bool {
 	return g.Row(i) == (g.rows - 1)
 }
 
-func (g Grid) isFirstColumn(i int) bool {
+func (g Grid) IsFirstColumn(i int) bool {
 	return g.Column(i) == 0
 }
 
-func (g Grid) isLastColumn(i int) bool {
+func (g Grid) IsLastColumn(i int) bool {
 	return g.Column(i) == (g.cols - 1)
 }
 
 // Index of a cell to direction (method name) by providing Index of a cell
 func (g Grid) Up(i int) int {
-	if g.isFirstRow(i) {
+	if g.IsFirstRow(i) {
 		return g.Index(g.cols-1, g.Column(i))
 	}
 	return g.Index(g.Row(i)-1, g.Column(i))
@@ -94,7 +94,7 @@ func (g Grid) Up(i int) int {
 
 // Index of a cell to direction (method name) by providing Index of a cell
 func (g Grid) Down(i int) int {
-	if g.isLastRow(i) {
+	if g.IsLastRow(i) {
 		return g.Index(0, g.Column(i))
 	}
 	return g.Index(g.Row(i)+1, g.Column(i))
@@ -102,7 +102,7 @@ func (g Grid) Down(i int) int {
 
 // Index of a cell to direction (method name) by providing Index of a cell
 func (g Grid) Left(i int) int {
-	if g.isFirstColumn(i) {
+	if g.IsFirstColumn(i) {
 		return g.Index(g.Row(i), g.rows-1)
 	}
 	return g.Index(g.Row(i), g.Column(i)-1)
@@ -110,7 +110,7 @@ func (g Grid) Left(i int) int {
 
 // Index of a cell to direction (method name) by providing Index of a cell
 func (g Grid) Right(i int) int {
-	if g.isLastColumn(i) {
+	if g.IsLastColumn(i) {
 		return g.Index(g.Row(i), 0)
 	}
 	return g.Index(g.Row(i), g.Column(i)+1)
@@ -143,4 +143,66 @@ func (g Grid) String() string {
 		out += fmt.Sprintf(cellfmt, c)
 	}
 	return out
+}
+
+// Search for instances of item , starting at logical index start
+// and finding count number of instances
+// negative number for count returns all instances
+// returns list of row, column
+func (g Grid) Search(item T, sIndex int, fIndex int, count int) []int {
+	var ind []int
+	if sIndex >= len(g.cells) {
+		return ind
+	}
+
+	if fIndex == -1 {
+		fIndex = len(g.cells)
+	}
+	if count < 0 {
+		count = len(g.cells)
+	}
+
+	for i, v := range g.cells[sIndex:fIndex] {
+		if len(ind) >= count {
+			return ind
+		}
+		if item == v {
+			ind = append(ind, i)
+		}
+	}
+	return ind
+}
+
+func (g Grid) GetRadius(index int, corners bool) []T {
+	var radius []T
+
+	if !g.IsFirstRow(index) {
+		if !g.IsFirstColumn(index) && corners {
+			radius = append(radius, g.Left(g.Up(index)))
+		}
+		radius = append(radius, g.Up(index))
+		if !g.IsLastColumn(index) && corners {
+			radius = append(radius, g.Right(g.Up(index)))
+		}
+	}
+
+	if !g.IsFirstColumn(index) {
+		radius = append(radius, g.Left(index))
+	}
+	radius = append(radius, index)
+	if !g.IsLastColumn(index) {
+		radius = append(radius, g.Right(index))
+	}
+
+	if !g.IsLastRow(index) {
+		if !g.IsFirstColumn(index) && corners {
+			radius = append(radius, g.Left(g.Down(index)))
+		}
+		radius = append(radius, g.Down(index))
+		if !g.IsLastColumn(index) && corners {
+			radius = append(radius, g.Right(g.Down(index)))
+		}
+	}
+
+	return radius
 }

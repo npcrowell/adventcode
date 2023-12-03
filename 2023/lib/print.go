@@ -47,8 +47,9 @@ func Debug(f string, a ...interface{}) {
 		r, _ := regexp.Compile("2023/(.+go)$")
 		file := r.FindAllStringSubmatch(fullfile, 1)[0][1]
 		c := color.New(color.FgHiYellow)
+		m := color.New(color.FgBlue)
 
-		c.Printf(" [%v:%v] ", file, line)
+		m.Printf(" [%v:%v] ", file, line)
 		c.Printf(f, a...)
 		c.Println()
 	}

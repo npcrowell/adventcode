@@ -61,3 +61,27 @@ func StringToDigit(digit string, base int) (int, error) {
 		return 0, errors.New("unrecognized base for conversion")
 	}
 }
+
+func Max(a int, b ...int) int {
+	max := a
+	for _, i := range b {
+		// Debug("max %v > %v ?", i, max)
+		if i > max {
+			max = i
+		}
+	}
+	// Debug("max =  %v", max)
+	return max
+}
+
+func Min(a int, b ...int) int {
+	min := a
+	for _, i := range b {
+		// Debug("min %v < %v ?", i, min)
+		if i < min {
+			min = i
+		}
+	}
+	// Debug("min =  %v", min)
+	return min
+}
