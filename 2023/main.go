@@ -2,6 +2,7 @@ package main
 
 import (
 	"advent2023/data"
+	"advent2023/days"
 	"advent2023/lib"
 	"flag"
 	"fmt"
@@ -21,7 +22,7 @@ func main() {
 
 	// Setup
 	days := []func(int, []string) (int, error){
-		day0, day1, day2, day3,
+		days.Day00, days.Day01, days.Day02, days.Day03, days.Day04,
 	}
 
 	// Validation, exit on failure
@@ -33,7 +34,7 @@ func main() {
 	var d []string
 	if test {
 		lib.Debug("Loading test data")
-		tdatastr := fmt.Sprintf("day%dpart%d", day, part)
+		tdatastr := fmt.Sprintf("day%02dpart%d", day, part)
 		d = data.Testdata[tdatastr]
 		for _, line := range d {
 			lib.Debug("  %v", line)

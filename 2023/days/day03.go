@@ -1,4 +1,4 @@
-package main
+package days
 
 import (
 	"advent2023/lib"
@@ -140,7 +140,7 @@ func day3_handleAsGrid(g *grid.Grid) (int, error) {
 	return ratios, nil
 }
 
-func day3(part int, data []string) (int, error) {
+func Day03(part int, data []string) (int, error) {
 	switch part {
 	case 1:
 		sum := 0

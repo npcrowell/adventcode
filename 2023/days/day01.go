@@ -1,4 +1,4 @@
-package main
+package days
 
 import (
 	"advent2023/lib"
@@ -19,7 +19,7 @@ func day1_parseLine(line string, digits []string) int {
 	return first*10 + last
 }
 
-func day1(part int, data []string) (int, error) {
+func Day01(part int, data []string) (int, error) {
 
 	switch part {
 	case 1:

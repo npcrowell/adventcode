@@ -1,4 +1,4 @@
-package main
+package days
 
 import (
 	"advent2023/lib"
@@ -99,7 +99,7 @@ func day2_computeGamePower(line string) int {
 	return power
 }
 
-func day2(part int, data []string) (int, error) {
+func Day02(part int, data []string) (int, error) {
 
 	switch part {
 	case 1:

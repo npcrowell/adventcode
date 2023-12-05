@@ -1,4 +1,4 @@
-package main
+package days
 
 import (
 	"errors"
@@ -6,7 +6,7 @@ import (
 
 // Template file
 
-func day0(part int, data []string) (int, error) {
+func Day00(part int, data []string) (int, error) {
 	switch part {
 	case 1:
 		return 0, nil
