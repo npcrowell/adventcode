@@ -23,6 +23,7 @@ func main() {
 	// Setup
 	days := []func(int, []string) (int, error){
 		days.Day00, days.Day01, days.Day02, days.Day03, days.Day04,
+		days.Day05,
 	}
 
 	// Validation, exit on failure
@@ -35,7 +36,12 @@ func main() {
 	if test {
 		lib.Debug("Loading test data")
 		tdatastr := fmt.Sprintf("day%02dpart%d", day, part)
-		d = data.Testdata[tdatastr]
+		if db, ok := data.Testdata[tdatastr]; !ok {
+			tdatastr := fmt.Sprintf("day%02d", day)
+			d = data.Testdata[tdatastr]
+		} else {
+			d = db
+		}
 		for _, line := range d {
 			lib.Debug("  %v", line)
 		}
