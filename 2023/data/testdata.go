@@ -111,4 +111,9 @@ var Testdata map[string][]string = map[string][]string{
 		"60 56 37",
 		"56 93 4",
 	},
+
+	"day06": {
+		"Time:      7  15   30",
+		"Distance:  9  40  200",
+	},
 }
