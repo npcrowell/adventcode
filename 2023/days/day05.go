@@ -11,30 +11,16 @@ import (
 )
 
 var (
-	seedline     *regexp.Regexp
 	mapstartline *regexp.Regexp
-	numline      *regexp.Regexp
 )
 
 func initRegex() {
-	sl, err := regexp.Compile(`^seeds: \d+ `)
-	if err != nil {
-		lib.Perror("Unable to compile seedline: %v", err)
-		return
-	}
 	msl, err := regexp.Compile(`^(\w+)-to-(\w+) map:`)
 	if err != nil {
 		lib.Perror("Unable to compile mapstartline: %v", err)
 		return
 	}
-	nl, err := regexp.Compile(`^\d+ +`)
-	if err != nil {
-		lib.Perror("Unable to compile seedline: %v", err)
-		return
-	}
-	seedline = sl
 	mapstartline = msl
-	numline = nl
 }
 
 func day5_parseSeeds(line string) ([]int, error) {
@@ -48,82 +34,6 @@ func day5_parseSeeds(line string) ([]int, error) {
 		snums = append(snums, snum)
 	}
 	return snums, nil
-}
-
-func day5_parseSeeds2(line string) ([]int, error) {
-	var snums []int
-	for _, sstr := range strings.Split(line, " ")[1:] {
-		snum, err := strconv.Atoi(sstr)
-		if err != nil {
-			lib.Perror("Unable to convert '%v' to int", sstr)
-			return nil, err
-		}
-		snums = append(snums, snum)
-	}
-
-	var srnums []int
-	for i := 0; i < len(snums); i += 2 {
-		lib.Debug("Seed: %v", snums[i])
-		for snum := snums[i]; snum < snums[i]+snums[i+1]; snum += 1 {
-			srnums = append(srnums, snum)
-		}
-	}
-	return srnums, nil
-}
-
-func day5_parseSingleSeed(lines []string, sval int) (string, string, int, int, error) {
-	// lib.Debug(lines[0])
-	mapst := ""
-	mapdst := ""
-	if mapstart := mapstartline.FindStringSubmatch(lines[0]); mapstart != nil {
-		// lib.Debug("Found mapstartline: %v to %v", mapstart[1], mapstart[2])
-		mapst = mapstart[1]
-		mapdst = mapstart[2]
-	}
-
-	count := 1
-	sdval := 0
-
-	for c, line := range lines[1:] {
-		// lib.Debug(line)
-		if len(line) == 0 {
-			count = c + 2
-			break
-		}
-		snums := strings.Split(line, " ")
-		dest, err := strconv.Atoi(snums[0])
-		if err != nil {
-			lib.Perror("Unable to convert '%v' to int", snums)
-			return mapst, mapdst, sval, count, err
-		}
-		start, err := strconv.Atoi(snums[1])
-		if err != nil {
-			lib.Perror("Unable to convert '%v' to int", snums)
-			return mapst, mapdst, sval, count, err
-		}
-		rlen, err := strconv.Atoi(snums[2])
-		if err != nil {
-			lib.Perror("Unable to convert '%v' to int", snums)
-			return mapst, mapdst, sval, count, err
-		}
-		mod := dest - start
-
-		// lib.Debug("(%v,%v,%v) start: %v, end: %v, diff: %v", start, dest, rlen, start, start+rlen, mod)
-
-		if sdval == 0 {
-			if sval >= start && sval < (start+rlen) {
-				lib.Debug("%v->%v", sval, sval+mod)
-				sdval = sval + mod
-			}
-		}
-		count = c + 2
-	}
-
-	if sdval == 0 {
-		sdval = sval
-	}
-	// lib.Debug("Returning %v", count)
-	return mapst, mapdst, sdval, count, nil
 }
 
 func day5_parseNextMapping(lines []string, svals []int) (string, string, []int, int, error) {
