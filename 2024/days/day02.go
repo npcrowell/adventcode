@@ -11,9 +11,6 @@ func d2_parse(data []string) ([][]int, error) {
 	var results [][]int
 
 	for _, line := range data {
-		//each line is a space delimited list of integers
-		//split the line into a slice of integers
-		//append the slice to a slice of slices
 
 		result_str := strings.Fields(line)
 		var result_int []int
@@ -59,7 +56,6 @@ func d2_is_safe(data []int) bool {
 }
 
 func d2_remove_int(data []int, index int) []int {
-	//copy data to a new slice, ex=cluding the index
 	var result []int
 	for i, d := range data {
 		if i == index {
@@ -77,8 +73,8 @@ loop1:
 	for _, d := range data {
 
 		for i := range d {
+
 			d_tmp := d2_remove_int(d, i)
-			// log.Printf("d_tmp: %v", d_tmp)
 			if d2_is_safe(d_tmp) {
 				lib.Debug("%v (safe)", d_tmp)
 				count++
@@ -99,8 +95,6 @@ func Day02(part int, data []string) (int, error) {
 	switch part {
 	case 1:
 		return d2_count_safe(pdata), nil
-
-		// return 0, nil
 	case 2:
 		return d2_count_safe(pdata), nil
 	default:
