@@ -9,6 +9,7 @@ import (
 
 func Day04(part int, data []string) (int, error) {
 	lib.Print("Day 4: Ceres Search")
+
 	switch part {
 	case 1:
 		return 0, nil
