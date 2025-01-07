@@ -79,7 +79,7 @@ func day3_getAssNumsAmong(g *grid.Grid, indices []grid.T) []int {
 		}
 
 		sindex := index
-		for ic := index; true; ic = g.Left(ic) {
+		for ic := index; true; ic = g.Left(ic, false) {
 			value := g.Value(ic).(string)
 			if !isnum(value) {
 				break
@@ -93,7 +93,7 @@ func day3_getAssNumsAmong(g *grid.Grid, indices []grid.T) []int {
 		}
 		nstr := ""
 
-		for ic := sindex; true; ic = g.Right(ic) {
+		for ic := sindex; true; ic = g.Right(ic, false) {
 			value := g.Value(ic).(string)
 			if !isnum(value) {
 				break
@@ -127,7 +127,7 @@ func day3_handleAsGrid(g *grid.Grid) (int, error) {
 	ratios := 0
 
 	for _, index := range matchcoords {
-		radius := g.GetRadius(index, true)
+		radius := g.GetRadius(index, true, false)
 
 		anums := day3_getAssNumsAmong(g, radius)
 		if len(anums) == 2 {

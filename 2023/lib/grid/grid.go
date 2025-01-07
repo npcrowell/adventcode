@@ -85,33 +85,49 @@ func (g Grid) IsLastColumn(i int) bool {
 }
 
 // Index of a cell to direction (method name) by providing Index of a cell
-func (g Grid) Up(i int) int {
+func (g Grid) Up(i int, wrap bool) int {
 	if g.IsFirstRow(i) {
-		return g.Index(g.cols-1, g.Column(i))
+		if wrap {
+			return g.Index(g.cols-1, g.Column(i))
+		} else {
+			return -1
+		}
 	}
 	return g.Index(g.Row(i)-1, g.Column(i))
 }
 
 // Index of a cell to direction (method name) by providing Index of a cell
-func (g Grid) Down(i int) int {
+func (g Grid) Down(i int, wrap bool) int {
 	if g.IsLastRow(i) {
-		return g.Index(0, g.Column(i))
+		if wrap {
+			return g.Index(0, g.Column(i))
+		} else {
+			return -1
+		}
 	}
 	return g.Index(g.Row(i)+1, g.Column(i))
 }
 
 // Index of a cell to direction (method name) by providing Index of a cell
-func (g Grid) Left(i int) int {
+func (g Grid) Left(i int, wrap bool) int {
 	if g.IsFirstColumn(i) {
-		return g.Index(g.Row(i), g.rows-1)
+		if wrap {
+			return g.Index(g.Row(i), g.rows-1)
+		} else {
+			return -1
+		}
 	}
 	return g.Index(g.Row(i), g.Column(i)-1)
 }
 
 // Index of a cell to direction (method name) by providing Index of a cell
-func (g Grid) Right(i int) int {
+func (g Grid) Right(i int, wrap bool) int {
 	if g.IsLastColumn(i) {
-		return g.Index(g.Row(i), 0)
+		if wrap {
+			return g.Index(g.Row(i), 0)
+		} else {
+			return -1
+		}
 	}
 	return g.Index(g.Row(i), g.Column(i)+1)
 }
@@ -173,34 +189,34 @@ func (g Grid) Search(item T, sIndex int, fIndex int, count int) []int {
 	return ind
 }
 
-func (g Grid) GetRadius(index int, corners bool) []T {
+func (g Grid) GetRadius(index int, corners bool, wrap bool) []T {
 	var radius []T
 
 	if !g.IsFirstRow(index) {
 		if !g.IsFirstColumn(index) && corners {
-			radius = append(radius, g.Left(g.Up(index)))
+			radius = append(radius, g.Left(g.Up(index, wrap), wrap))
 		}
-		radius = append(radius, g.Up(index))
+		radius = append(radius, g.Up(index, false))
 		if !g.IsLastColumn(index) && corners {
-			radius = append(radius, g.Right(g.Up(index)))
+			radius = append(radius, g.Right(g.Up(index, wrap), wrap))
 		}
 	}
 
 	if !g.IsFirstColumn(index) {
-		radius = append(radius, g.Left(index))
+		radius = append(radius, g.Left(index, wrap))
 	}
 	radius = append(radius, index)
 	if !g.IsLastColumn(index) {
-		radius = append(radius, g.Right(index))
+		radius = append(radius, g.Right(index, wrap))
 	}
 
 	if !g.IsLastRow(index) {
 		if !g.IsFirstColumn(index) && corners {
-			radius = append(radius, g.Left(g.Down(index)))
+			radius = append(radius, g.Left(g.Down(index, wrap), wrap))
 		}
-		radius = append(radius, g.Down(index))
+		radius = append(radius, g.Down(index, wrap))
 		if !g.IsLastColumn(index) && corners {
-			radius = append(radius, g.Right(g.Down(index)))
+			radius = append(radius, g.Right(g.Down(index, wrap), wrap))
 		}
 	}
 

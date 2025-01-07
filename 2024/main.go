@@ -22,9 +22,12 @@ func main() {
 
 	// Setup
 	days := []func(int, []string) (int, error){
-		days.Day00, days.Day01, days.Day02, //days.Day03, days.Day04,
+		days.Day00, days.Day01, days.Day02, days.Day03, days.Day04,
 		//days.Day05, days.Day06, days.Day07, days.Day08, days.Day09,
-		//days.Day10,
+		//days.Day10,days.Day11,days.Day12,days.Day13,days.Day14,
+		//days.Day15,days.Day16,days.Day17,days.Day18,days.Day19,
+		//days.Day20,days.Day21,days.Day22,days.Day23,days.Day24,
+		//days.Day25
 	}
 
 	// Validation, exit on failure
